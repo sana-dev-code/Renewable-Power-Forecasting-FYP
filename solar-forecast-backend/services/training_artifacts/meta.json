@@ -1,0 +1,17 @@
+{
+  "location": "Lahore",
+  "T": 72,
+  "H": 24,
+  "features": [
+    "irr",
+    "t_amb",
+    "t_mod",
+    "wind",
+    "hour",
+    "doy_sin",
+    "doy_cos"
+  ],
+  "target": "hourly_kwh_per_panel",
+  "seasonal_encoding": true,
+  "created_at": "2025-12-15T07:12:16.195824"
+}

@@ -1,0 +1,268 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────
+   CSS CUSTOM PROPERTIES — Light Theme (default)
+   Professional Slate & Indigo Palette
+───────────────────────────────────────────────────────────── */
+:root {
+  --bg:           #f8fafc;
+  --surface:      #ffffff;
+  --surface-soft: #f1f5f9;
+  --surface-hover:#e2e8f0;
+  --border:       #e2e8f0;
+  --text:         #0f172a;
+  --text-secondary:#475569;
+  --muted:        #64748b;
+  --accent:       #2563eb; /* WCAG AA accessible blue */
+  --accent-2:     #1d4ed8; /* Darker blue for hover states */
+  --accent-rgb:   37, 99, 235;
+  --success:      #10b981;
+  --danger:       #ef4444;
+  --warning:      #f59e0b;
+  --info:         #0ea5e9;
+  --shadow-sm:    0 1px 2px 0 rgba(0,0,0,0.05);
+  --shadow-md:    0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+  --radius:       8px;
+}
+
+[data-theme="dark"] {
+  --bg:           #0b0f19;
+  --surface:      #151f32;
+  --surface-soft: #1e293b;
+  --surface-hover:#2d3a4f;
+  --border:       #1e293b;
+  --text:         #f8fafc;
+  --text-secondary:#cbd5e1;
+  --muted:        #64748b;
+  --accent:       #3b82f6; /* Bright blue for dark mode visibility */
+  --accent-2:     #60a5fa; /* Lighter hover blue */
+  --accent-rgb:   59, 130, 246;
+  --success:      #34d399;
+  --danger:       #f87171;
+  --warning:      #fbbf24;
+  --info:         #38bdf8;
+  --shadow-sm:    0 1px 2px 0 rgba(0,0,0,0.3);
+  --shadow-md:    0 4px 6px -1px rgba(0,0,0,0.4), 0 2px 4px -2px rgba(0,0,0,0.4);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   BASE STYLES
+───────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  overflow-x: hidden;
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', 'Fira Code', Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SCROLLBAR STYLING
+───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* ─────────────────────────────────────────────────────────────
+   UTILITY CLASSES (CSS-var based, supplement Tailwind)
+───────────────────────────────────────────────────────────── */
+.bg-theme        { background-color: var(--bg); }
+.bg-surface      { background-color: var(--surface); }
+.bg-surface-soft { background-color: var(--surface-soft); }
+.text-theme      { color: var(--text); }
+.text-muted      { color: var(--muted); }
+.text-accent     { color: var(--accent-2); }
+.border-theme    { border-color: var(--border); }
+
+.card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.card-hover:hover {
+  background-color: var(--surface-hover);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   CHART CONTAINER
+───────────────────────────────────────────────────────────── */
+.chart-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   SIDEBAR TRANSITIONS
+───────────────────────────────────────────────────────────── */
+.sidebar-transition {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   ANIMATIONS
+───────────────────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeIn 0.25s ease forwards;
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-soft) 25%,
+    var(--surface-hover) 50%,
+    var(--surface-soft) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: 6px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   FORM ELEMENTS — themed
+───────────────────────────────────────────────────────────── */
+.input-base {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  font-size: 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background-color: var(--surface);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.input-base:focus {
+  border-color: var(--accent-2);
+  box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.15);
+}
+.input-base::placeholder { color: var(--muted); }
+
+/* ─────────────────────────────────────────────────────────────
+   BADGE VARIANTS
+───────────────────────────────────────────────────────────── */
+.badge-demo {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--warning);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   NAV ACTIVE STATE
+───────────────────────────────────────────────────────────── */
+.nav-active {
+  background-color: rgba(var(--accent-rgb), 0.06) !important;
+  color: var(--accent) !important;
+  border-left: 3px solid var(--accent);
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  padding-left: calc(0.75rem - 3px) !important; /* Adjust padding to offset border width */
+}
+.nav-item:hover:not(.nav-active) {
+  background-color: var(--surface-hover);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   RESPONSIVE: no horizontal scroll
+───────────────────────────────────────────────────────────── */
+.main-content {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+table {
+  min-width: 100%;
+}
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PROGRESS BAR
+───────────────────────────────────────────────────────────── */
+.progress-track {
+  height: 8px;
+  background: var(--surface-soft);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--accent-2), var(--accent));
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   TOGGLE SWITCH
+───────────────────────────────────────────────────────────── */
+.toggle-track {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--border);
+  transition: background 0.2s;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.toggle-track.on { background: var(--accent-2); }
+.toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+.toggle-track.on .toggle-thumb { transform: translateX(20px); }
+
+/* ─────────────────────────────────────────────────────────────
+   PRINT
+───────────────────────────────────────────────────────────── */
+@media print {
+  .no-print { display: none !important; }
+}

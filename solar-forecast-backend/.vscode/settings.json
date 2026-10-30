@@ -1,0 +1,9 @@
+{
+  "python.defaultInterpreterPath": "F:\\Finalyear\\solar-forecast-backend\\.venv\\Scripts\\python.exe",
+  "python.analysis.extraPaths": [
+    "F:\\Finalyear\\solar-forecast-backend"
+  ],
+  "python.analysis.exclude": [
+    "**/.venv/**"
+  ]
+}

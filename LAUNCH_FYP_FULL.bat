@@ -32,7 +32,7 @@ echo  [OK] Python is ready.
 
 :: --- START BACKEND (FastAPI) ---
 echo  [3/4] Launching Python Backend (Port 8000)...
-start "SolarCast Backend (Python)" cmd /k "cd solar-forecast-backend && venv\Scripts\activate && python -m uvicorn app:app --host 0.0.0.0 --port 8000"
+start "SolarCast Backend (Python)" cmd /k "cd solar-forecast-backend && .venv\Scripts\activate && python -m uvicorn app:app --host 0.0.0.0 --port 8000"
 
 :: --- START AUTH PROXY (Node.js) ---
 echo  [4/4] Launching Auth Proxy ^& Frontend (Port 4000)...

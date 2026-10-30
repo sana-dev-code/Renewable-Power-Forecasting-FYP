@@ -206,10 +206,10 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../solar-forecast-backend/solar_app.html'));
 });
 
-
 // ========== AUTH GUARD FOR API ==========
 function authMiddleware(req, res, next) {
-  if (req.path === '/api/ping') return next();
+  // Allow ping without token
+  if (req.path === '/ping' || req.path === '/api/ping') return next();
   const authHeader = req.headers.authorization || '';
   const parts = authHeader.split(' ');
   if (parts.length !== 2 || parts[0] !== 'Bearer' || !parts[1]) {
@@ -228,6 +228,9 @@ function authMiddleware(req, res, next) {
 }
 
 // ========== PROXY TO FASTAPI ==========
+// Ping bypass — no auth, no proxy needed
+app.get('/api/ping', (req, res) => res.json({ ok: true }));
+
 app.use(
   '/api',
   authMiddleware,
@@ -245,6 +248,18 @@ app.use(
       }
       if (INTERNAL_TOKEN) {
         proxyReq.setHeader('x-internal-token', INTERNAL_TOKEN);
+      }
+      // Disable buffering for SSE streaming (training endpoint)
+      if (req.path.includes('/train')) {
+        proxyReq.setHeader('X-Accel-Buffering', 'no');
+        proxyReq.setHeader('Cache-Control', 'no-cache');
+      }
+    },
+    onProxyRes(proxyRes, req, res) {
+      // Keep SSE connection alive
+      if (req.path.includes('/train')) {
+        proxyRes.headers['cache-control'] = 'no-cache';
+        proxyRes.headers['x-accel-buffering'] = 'no';
       }
     }
   })
